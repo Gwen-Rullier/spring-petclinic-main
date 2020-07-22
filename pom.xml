@@ -137,13 +137,6 @@
   
     <plugins>
       <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-            <configuration>
-                <executable>true</executable>
-            </configuration>
-      </plugin>
-      <plugin>
         <groupId>io.spring.javaformat</groupId>
         <artifactId>spring-javaformat-maven-plugin</artifactId>
         <version>${spring-format.version}</version>
@@ -193,10 +186,12 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <executable>true</executable>
+        </configuration>
         <executions>
           <execution>
-            <!-- Spring Boot Actuator displays build-related information
-              if a META-INF/build-info.properties file is present -->
+            
             <goals>
               <goal>build-info</goal>
             </goals>
