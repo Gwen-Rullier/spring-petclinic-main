@@ -5,7 +5,7 @@
             stage('Build') {
                 steps {
                     step ([$class: 'CopyArtifact',
-                            projectName: 'PollsSCM',
+                            projectName: 'Test-petclinic',
                             target: '/var/www']
                     );
                 }
