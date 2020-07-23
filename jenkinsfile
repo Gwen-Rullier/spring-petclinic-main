@@ -13,12 +13,7 @@
             }
 
 
-             stage('Test') {
-                        steps {
-                            sh 'make check || true'
-                            junit '**/target/surefire-reports/*.xml'
-                        }
-              }
+
 
 
             stage('Deploy') {
