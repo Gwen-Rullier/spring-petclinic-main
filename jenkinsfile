@@ -24,7 +24,7 @@ pipeline {
         // copyArtefact....
         // sh 'sudo systemctl restart petclinic'
         //sh 'docker stop $(cat .dockerpidfile)'
-        sh 'docker run -p 8088:8080 -d petclinic > .dockerpidfile'
+        sh 'docker run -p http://192.168.33.10:8088:8080 -d petclinic > .dockerpidfile'
       }
     }
   }
