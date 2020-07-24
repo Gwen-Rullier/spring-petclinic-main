@@ -26,7 +26,10 @@ pipeline {
         sh 'docker stop $(cat .dockerpidfile)'
         sh 'docker run -p 8088:8080 -d petclinic > .dockerpidfile'
       }
-    }
+       steps {
+         //sh 'docker exec -i mysql-container mysql -uuser -ppassword name_db < data.sql'
+         sh 'docker-compose up'
+      }
   }
 }
 
