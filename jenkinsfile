@@ -23,7 +23,7 @@ pipeline {
       steps {
         // copyArtefact....
         // sh 'sudo systemctl restart petclinic'
-        sh 'docker stop $(cat .dockerpidfile)'
+        //sh 'docker stop $(cat .dockerpidfile)'
         sh 'docker run -p 8088:8080 -d petclinic > .dockerpidfile'
       }
     }
