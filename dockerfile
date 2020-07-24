@@ -1,5 +1,4 @@
-FROM openjdk:8-jdk-alpine
-COPY /var/www/target/spring-petclinic-*.jar /var/www/target/spring-petclinic-prod.jar
-WORKDIR /var/www/target
-EXPOSE 8088
-CMD [ "java", "-jar", "spring-petclinic-prod.jar" ]
+FROM openjdk:8-jre-alpine
+ADD target/spring-petclinic-2.3.1.BUILD-SNAPSHOT.jar app.jar
+EXPOSE 8080
+CMD ["java", "-jar", "/app.jar"]

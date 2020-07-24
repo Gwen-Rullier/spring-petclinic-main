@@ -1,29 +1,40 @@
-    pipeline {
-        agent any
-
-        stages {
-            stage('Build') {
-                steps {
-                    sh 'rm -rf /var/www/target/'
-                    step ([$class: 'CopyArtifact',
-                            projectName: 'Test-petclinic',
-                            target: '/var/www']
-
-                    );
-                }
-            }
-
-
-
-
-
-            stage('Deploy') {
-                steps {
-                    sh 'rm -rf '
-                    sh 'mv /var/www/target/spring-petclinic-*.jar /var/www/target/spring-petclinic-prod.jar'
-                    sh 'sudo systemctl restart spring-petclinic'
-
-                }
-            }
-        }
+pipeline {
+  agent any
+  stages {
+    stage('Checkout code') {
+      steps {
+        checkout scm
+      }
     }
+    stage('Build') {
+      steps {
+        sh 'mvn -B jacoco:report checkstyle:checkstyle install'
+        archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+        sh 'docker build -t petclinic .'
+      }
+    }
+    stage('Publish Test Coverage Report and Code Analysis') {
+      steps {
+        jacoco()
+        recordIssues(tools: [checkStyle(), junitParser(), mavenConsole()])
+      }
+    }
+    stage('Deploy') {
+      steps {
+        // copyArtefact....
+        // sh 'sudo systemctl restart petclinic'
+        sh 'docker stop $(cat .dockerpidfile)'
+        sh 'docker run -p 8088:8080 -d petclinic > .dockerpidfile'
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+

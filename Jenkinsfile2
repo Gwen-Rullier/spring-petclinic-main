@@ -32,3 +32,34 @@ timeout(time: 10, unit: 'SECONDS') {
     )
   }
 }
+
+
+pipeline {
+        agent any
+
+        stages {
+            stage('Build') {
+                steps {
+                    sh 'rm -rf /var/www/target/'
+                    step ([$class: 'CopyArtifact',
+                            projectName: 'Test-petclinic',
+                            target: '/var/www']
+
+                    );
+                }
+            }
+
+
+
+
+
+            stage('Deploy') {
+                steps {
+                    sh 'rm -rf '
+                    sh 'mv /var/www/target/spring-petclinic-*.jar /var/www/target/spring-petclinic-prod.jar'
+                    sh 'sudo systemctl restart spring-petclinic'
+
+                }
+            }
+        }
+    }
